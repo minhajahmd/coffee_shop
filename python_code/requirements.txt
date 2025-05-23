@@ -3,3 +3,5 @@ numpy==2.2.3
 openai==1.66.3
 python-dotenv==1.0.0
 mlxtend==0.24.4
+firebase-admin==6.8.0
+google-cloud-storage==3.1.0
