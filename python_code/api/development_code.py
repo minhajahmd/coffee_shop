@@ -1,7 +1,7 @@
 # Sandbox/testing file to prototype agent behavior and run experiments.
 # Not part of production — useful for local testing and quick debugging.
 
-from agents import (GuardAgent)
+from agents import (GuardAgent, ClassificationAgent)
 import os
 
 def main():
@@ -10,10 +10,11 @@ def main():
 # Run the script only if it's executed directly (not imported elsewhere)
 if __name__ == "__main__":
     guard_agent = GuardAgent()
+    classification_agent = ClassificationAgent()
 
     messages = []
     while True:
-        os.system('cls' if os.name == 'nt' else 'clear')
+        # os.system('cls' if os.name == 'nt' else 'clear')
 
         print("Guard Agent is running.")
         for message in messages:
@@ -25,8 +26,11 @@ if __name__ == "__main__":
 
         # Get Guard Agent's response    
         guard_agent_response = guard_agent.get_response(messages)
-        if guard_agent_response['memory']["guard_decision"] == "allowed":
+        if guard_agent_response['memory']["guard_decision"] == "not allowed":
             messages.append(guard_agent_response)
             continue
 
         # Get Classifier Agent's response
+        classification_agent_response = classification_agent.get_response(messages)
+        chosen_agent = classification_agent_response['memory']["classification_decision"]
+        print("Classification Agent chose:", chosen_agent)
