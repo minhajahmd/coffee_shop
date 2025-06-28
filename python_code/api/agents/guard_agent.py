@@ -2,7 +2,7 @@ from openai import OpenAI
 import os
 import json
 from copy import deepcopy
-from .utils import get_chatbot_response
+from .utils import get_chatbot_response, double_check_json_output
 import dotenv
 dotenv.load_dotenv()
 
@@ -31,7 +31,7 @@ class GuardAgent():
             1. Ask questions that are not related to the coffee shop.
             2. Ask questions about the staff or how to make a certain menu item.       
 
-            Your output should be in a structured JSON format like so. Each key is a string and each value is a string. Make sure you follow the format exactly:
+            ✅ Format your output as **valid JSON**, exactly like this:            
             {
                 "chain of thought": "go over each of the points above and see if the message lies under this point or not. Then you write some thoughts about what point is this input relevant to."
                 "decision": "allowed" or "not allowed". Pick one of those and only write the word.
@@ -45,6 +45,8 @@ class GuardAgent():
             self.model_name, 
             input_messages
             )
+        print("Guard Agent Output:", chatbot_output)
+        chatbot_output = double_check_json_output(self.client, self.model_name, chatbot_output)
         output = self.postprocess(chatbot_output)
 
         return output
@@ -54,10 +56,10 @@ class GuardAgent():
 
         dict_output = {
             "role": "assistant",
-            "content": output["message"],
+            "content": output['message'],
             "memory": {
                 "agent": "guard_agent",
-                "guard_decision": output["decision"]
+                "guard_decision": output['decision']
             }
         }
         return dict_output
