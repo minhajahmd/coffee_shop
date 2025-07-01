@@ -11,19 +11,20 @@ folder_path = pathlib.Path(__file__).parent.resolve()
 def main():
     guard_agent = GuardAgent()
     classification_agent = ClassificationAgent()
+    recommendation_agent = RecommendationAgent(
+            os.path.join(folder_path, 'recommendation_objects/apriori_recommendation.json'),
+            os.path.join(folder_path, 'recommendation_objects/popularity_recommendation.csv')
+        )
 
     agent_dict: Dict[str, AgentProtocol] = {
         "details_agent": DetailsAgent(),
-        "recommendation_agent": RecommendationAgent(
-            os.path.join(folder_path, 'recommendation_objects/apriori_recommendation.json'),
-            os.path.join(folder_path, 'recommendation_objects/popularity_recommendation.csv')
-        ),
-        "order_taking_agent": OrderTakingAgent()
+        "recommendation_agent": recommendation_agent,
+        "order_taking_agent": OrderTakingAgent(recommendation_agent)
     }
 
     messages = []
     while True:
-        # os.system('cls' if os.name == 'nt' else 'clear')
+        os.system('cls' if os.name == 'nt' else 'clear')
 
         print("\n Guard Agent is running.")
         for message in messages:
@@ -42,12 +43,10 @@ def main():
         # Get Classifier Agent's response
         classification_agent_response = classification_agent.get_response(messages)
         chosen_agent = classification_agent_response['memory']["classification_decision"]
-        print("Classification Agent chose:", chosen_agent)
 
         # Get the chosen agent's response
         agent = agent_dict[chosen_agent]
         response = agent.get_response(messages)
-        print("Agent Output:", response)
         messages.append(response)
 
 # Run the script only if it's executed directly (not imported elsewhere)

@@ -9,16 +9,16 @@ load_dotenv()
 class OrderTakingAgent():
     # This agent is responsible for taking orders from the user. It handles the conversation with the user about the order until the order is complete.
     
-    def __init__(self):
+    def __init__(self, recommendation_agent):
         self.client = OpenAI(
             api_key=os.getenv("RUNPOD_TOKEN"),
             base_url=os.getenv("RUNPOD_CHATBOT_URL")
         )
         self.model_name = os.getenv("MODEL_NAME")
+        self.recommendation_agent = recommendation_agent  # This is the recommendation agent that will be used to recommend items to the user if they ask for recommendations.
 
     def get_response(self, messages):
         messages = deepcopy(messages)
-
         system_prompt = """
             You are a customer support Bot for a coffee shop called "Velvet Hours"
 
@@ -96,7 +96,8 @@ class OrderTakingAgent():
 
         """
 
-        last_order_taking_status = ""           
+        last_order_taking_status = ""   
+        asked_recommendation_before = False        
         # Find the last order taking status from the messages
         # We will look for the last message from the assistant that has the memory of order_taking_agent
         # and extract the step_number and order from it.
@@ -104,6 +105,7 @@ class OrderTakingAgent():
             if message["role"] == "assistant" and message.get("memory", {}).get("agent") == "order_taking_agent":
                 step_number = message["memory"].get("step_number", "")
                 order = message["memory"].get("order", [])
+                asked_recommendation_before = message["memory"].get("asked_recommendation_before", False)
                 if order:       
                     last_order_taking_status = f"""step_number: {step_number}\norder: {order}"""    
                     break
@@ -114,16 +116,21 @@ class OrderTakingAgent():
 
         chatbot_response = get_chatbot_response(self.client, self.model_name, input_messages)
         chatbot_response = double_check_json_output(self.client, self.model_name, chatbot_response)
-        output = self.postprocess(chatbot_response)
+
+        output = self.postprocess(chatbot_response, messages, asked_recommendation_before)
         return output
     
-    def postprocess(self, output):
+    def postprocess(self, output, messages, asked_recommendation_before):
         output = json.loads(output)
 
         if type(output['order'])== str:
             output['order'] = json.loads(output['order'])
 
         response = output['response']
+        if not asked_recommendation_before and len(output['order']) > 0:
+            recommendation_output = self.recommendation_agent.get_recommendations_from_order(messages, output['order'])
+            response = recommendation_output['content']
+            asked_recommendation_before = True
 
         dict_output = {
             "role": "assistant",
@@ -131,6 +138,7 @@ class OrderTakingAgent():
             "memory": {
                 "agent": "order_taking_agent",
                 "step_number": output['step_number'],
+                "asked_recommendation_before": asked_recommendation_before,
                 "order": output['order']
             }
         }
