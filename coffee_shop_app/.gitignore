@@ -32,6 +32,7 @@ yarn-error.*
 
 # local env files
 .env*.local
+coffee_shop_app/.env
 
 # typescript
 *.tsbuildinfo
