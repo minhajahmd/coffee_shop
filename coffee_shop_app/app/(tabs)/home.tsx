@@ -39,7 +39,7 @@ const home = () => {
 
   return (
     <GestureHandlerRootView>
-      <SafeAreaView className='w-full h-full'>
+      <SafeAreaView style={{flex: 1}} edges={['top', 'left', 'right']} className='w-full h-full'>
         <FlatList 
           horizontal={false} 
           numColumns={2}
