@@ -7,6 +7,9 @@ export default function RootLayout() {
     "Sora-SemiBold": require("../assets/fonts/Sora-SemiBold.ttf"),
     "Sora-Bold": require("../assets/fonts/Sora-Bold.ttf")
   }); 
+  if (!fonsLoaded) {
+    return undefined;
+  }
   return (
     <Stack>
       <Stack.Screen name="index" options={{headerShown: false}} />
