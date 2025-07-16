@@ -7,3 +7,8 @@ export interface Product {
     price: number;
     rating: number;
 }
+
+export interface ProductCategory {
+   id: string,
+   selected: boolean, 
+}
