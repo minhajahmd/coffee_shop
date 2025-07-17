@@ -1,3 +1,4 @@
+import { CartProvider } from "@/components/CartContext";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 
@@ -11,9 +12,12 @@ export default function RootLayout() {
     return undefined;
   }
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{headerShown: false}} />
-      <Stack.Screen name="(tabs)" options={{headerShown: false}} />
-    </Stack>
+    <CartProvider>
+      <Stack>
+        <Stack.Screen name="index" options={{headerShown: false}} />
+        <Stack.Screen name="details" options={{headerShown: true}} />
+        <Stack.Screen name="(tabs)" options={{headerShown: false}} />
+      </Stack>
+    </CartProvider>
   )
 }

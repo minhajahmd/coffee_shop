@@ -6,11 +6,14 @@ import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import SearchArea from '@/components/SearchArea';
-import { StatusBar } from 'expo-status-bar';
 import Banner from '@/components/Banner';
+import { router } from 'expo-router';
+import { useCart } from '@/components/CartContext';
 
 
 const home = () => {
+  const {addToCart, cartItems} = useCart();
+
   const [products, setProducts] = useState<Product[]>([]);    // 
   const [shownProducts, setShownProducts] = useState<Product[]>([]);
   const [productCategories, setProductCategories] = useState<ProductCategory[]>([]);
@@ -68,6 +71,12 @@ const home = () => {
     return <Text>Loading...</Text>;
   }
 
+  const addButton = (name: string) => {
+    addToCart(name, 1);
+    console.log('Added to cart');
+    console.log(cartItems);
+  }
+
   return (
     <GestureHandlerRootView>
       <SafeAreaView style={{flex: 1}} edges={['top', 'left', 'right']} className='w-full h-full'>
@@ -79,7 +88,19 @@ const home = () => {
           data ={shownProducts}
           renderItem={({ item }) => (
             <View className='w-[48%] mt-2 bg-white rounded-2xl p-2 justify-between'>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  router.push({
+                    pathname: '/details', params: {
+                      name: item.name,
+                      type: item.category,
+                      price: item.price,
+                      rating: item.rating,
+                      description: item.description
+                    }
+                  })
+                }}  
+              >
                 <Image
                   className="w-full h-32 rounded-2xl"
                   source={{ uri: item.image_url }}
@@ -95,7 +116,9 @@ const home = () => {
                   <Text className='text-[#050505] text-xl font-[Sora-SemiBold]'>
                     ${item.price.toFixed(2)}
                   </Text>
-                <TouchableOpacity>
+                <TouchableOpacity 
+                  onPress={() => addButton(item.name)}
+                >
                   <View className='mr-2 p-2 -mt-1 bg-app_orange_color rounded-lg'>
                     <AntDesign name="plus" size={20} color="white" />
                   </View>
