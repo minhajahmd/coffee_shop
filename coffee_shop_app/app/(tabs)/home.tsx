@@ -9,6 +9,7 @@ import SearchArea from '@/components/SearchArea';
 import Banner from '@/components/Banner';
 import { router } from 'expo-router';
 import { useCart } from '@/components/CartContext';
+import Toast from 'react-native-root-toast'
 
 
 const home = () => {
@@ -73,8 +74,9 @@ const home = () => {
 
   const addButton = (name: string) => {
     addToCart(name, 1);
-    console.log('Added to cart');
-    console.log(cartItems);
+    Toast.show(`${name} added to cart`, {
+      duration: Toast.durations.SHORT
+    })
   }
 
   return (
