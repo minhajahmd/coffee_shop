@@ -1,13 +1,14 @@
 import { Text, View } from 'react-native'
 import React from 'react'
 import PageHeader from '@/components/PageHeader'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 const Order = () => {
   return (
-    <View>
-      <PageHeader title='Order' showHeaderRight={false} bgColor='#F9F9F9'/>
+    <GestureHandlerRootView className='w-full h-full bg-[#F9F9F9]'>
+      <PageHeader title='Order' showHeaderRight={false} bgColor='#F5F5F5'/>
       <Text>Order</Text>
-    </View>
+    </GestureHandlerRootView>
   )
 }
 
