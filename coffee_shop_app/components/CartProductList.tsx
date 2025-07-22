@@ -2,6 +2,8 @@ import { Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Product } from '@/types/types'
 import { FlatList } from 'react-native-gesture-handler';
+import OrdersHeader from './OrdersHeader';
+import OrdersFooter from './OrdersFooter';
 
 interface ProductListProps {
     products: Product[];
@@ -46,6 +48,8 @@ const ProductList = ({products, quantities, setQuantities, totalPrice}: ProductL
           data={filteredProducts}
           renderItem={renderItem}
           keyExtractor={(item) => item.name}
+          ListHeaderComponent={<OrdersHeader/>}
+          ListFooterComponent={<OrdersFooter totalPrice={totalPrice}/>}
         />
       ): (
         <View className='mx-7 items-center'>
