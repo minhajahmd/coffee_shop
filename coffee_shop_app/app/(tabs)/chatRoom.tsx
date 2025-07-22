@@ -1,13 +1,74 @@
-import { Text, View } from 'react-native'
-import React from 'react'
+import { KeyboardAvoidingView, Platform, Text, TouchableOpacity, View } from 'react-native'
+import React, { useRef, useState } from 'react'
 import PageHeader from '@/components/PageHeader'
+import { MessageInterface } from '@/types/types'
+import { GestureHandlerRootView, TextInput } from 'react-native-gesture-handler'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
+import Feather from '@expo/vector-icons/Feather';
+import MessageList from '@/components/MessageList'
+
 
 const ChatRoom = () => {
+  const [messages, setMessages] = useState<MessageInterface[]>([])
+  const textRef = useRef<string>('')
+  const inputRef = useRef<TextInput>(null)
+
+  const handleSendMessage =  async () => {
+    let message = textRef.current.trim();
+    if (!message) return;
+    try {
+      let inputMessages = [...messages, { content: message, role: 'user' }];
+      setMessages(inputMessages)
+      textRef.current = '';
+      if (inputRef) inputRef?.current?.clear();
+      
+      // Call API to get response
+      
+      setMessages([...inputMessages, { content: 'Thinking...', role: 'assistant' }]);
+
+    } catch (error) {
+      console.error('Error sending message:', error);
+      
+    }
+  }
+
   return (
-    <View>
-      <PageHeader title='ChatBot' showHeaderRight={false} bgColor='#F9F9F9'/>
-      <Text>chatRoom</Text>
-    </View>
+    <GestureHandlerRootView>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'android' ? 'padding' : 'height'}
+        style={{ flex: 1}}
+        keyboardVerticalOffset={Platform.OS === 'android' ? 40: 0}
+      >      
+      <PageHeader title='ChatBot' showHeaderRight={false} bgColor='#F5F5F5'/>
+      <View
+        className='flex-1 justify-between bg-neutral-100 overflow-visible pb-20'
+      >
+        <View className='flex-1'>
+          <MessageList
+            messages={messages}
+          />
+        </View>
+        <View>
+          <View className='flex-row justify-between mx-3 mb-3 border p-2 bg-white border-neutral-300 rounded-full pl-5'>
+            <TextInput
+                ref={inputRef}
+                onChangeText={value => textRef.current = value}
+                placeholder='Type a message...'
+                style={{fontSize: hp(1.5)}}
+                className='flex-1 mr-2'
+            />
+            <TouchableOpacity 
+              className='bg-neutral-200 p-3 mr-[2px] rounded-full'
+              onPress={handleSendMessage}
+            >
+              <Feather name='send' size={hp(2.6)} color='#737373'/>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+      </View>
+      </KeyboardAvoidingView>
+    </GestureHandlerRootView>
   )
 }
 
