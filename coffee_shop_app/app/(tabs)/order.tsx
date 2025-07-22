@@ -8,6 +8,8 @@ import { useCart } from '@/components/CartContext'
 import { fetchProducts } from '@/services/productService'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import Toast from 'react-native-root-toast'
+import { router } from 'expo-router'
 
 
 const Order = () => {
@@ -48,6 +50,16 @@ const Order = () => {
     loadProducts();
   },[])
 
+  const orderNow = () => {
+    emptyCart();
+    Toast.show('Order placed successfully!', {
+      duration: Toast.durations.SHORT,
+      position: Toast.positions.BOTTOM,
+    })
+    router.push('/thankyou')
+  }
+
+
   return (
     <GestureHandlerRootView className='w-full h-full bg-[#F9F9F9]'>
       <PageHeader title='Order' showHeaderRight={false} bgColor='#F5F5F5'/>
@@ -73,6 +85,7 @@ const Order = () => {
           <TouchableOpacity 
             className={` ${totalPrice===0 ? 'bg-[#EDEDED]' : 'bg-app_orange_color'} rounded-2xl items-center justify-between mt-6 py-3`}
             disabled={totalPrice === 0}
+            onPress={orderNow}
           >
             <Text className='text-xl text-white font-[Sora-Regular]'>
               Order
