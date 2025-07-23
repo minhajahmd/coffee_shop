@@ -6,6 +6,7 @@ import { GestureHandlerRootView, TextInput } from 'react-native-gesture-handler'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
 import Feather from '@expo/vector-icons/Feather';
 import MessageList from '@/components/MessageList'
+import { callChatBotAPI } from '@/services/chatBot'
 
 
 const ChatRoom = () => {
@@ -26,8 +27,8 @@ const ChatRoom = () => {
       
       // Call API to get response
       setIsTyping(true);
-      await new Promise(resolve => setTimeout(resolve, 5000)); // Simulate API call delay
-      setMessages([...inputMessages, { content: 'Can I help you?', role: 'assistant' }]);
+      let responseMessage = await callChatBotAPI(inputMessages);
+      setMessages([...inputMessages, responseMessage]);
       setIsTyping(false);
     } catch (error) {
       console.error('Error sending message:', error);
