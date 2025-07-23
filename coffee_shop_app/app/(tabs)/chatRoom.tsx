@@ -7,6 +7,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import Feather from '@expo/vector-icons/Feather';
 import MessageList from '@/components/MessageList'
 import { callChatBotAPI } from '@/services/chatBot'
+import { useCart } from '@/components/CartContext'
 
 
 const ChatRoom = () => {
@@ -15,6 +16,8 @@ const ChatRoom = () => {
   const inputRef = useRef<TextInput>(null)
 
   const [isTyping, setIsTyping] = useState(false);
+
+  const { addToCart, emptyCart } = useCart();
 
   const handleSendMessage =  async () => {
     let message = textRef.current.trim();
@@ -28,8 +31,20 @@ const ChatRoom = () => {
       // Call API to get response
       setIsTyping(true);
       let responseMessage = await callChatBotAPI(inputMessages);
-      setMessages([...inputMessages, responseMessage]);
       setIsTyping(false);
+      setMessages([...inputMessages, responseMessage]);
+
+      if (responseMessage) {
+        if (responseMessage.memory) {
+          if (responseMessage.memory.order) {
+            emptyCart();
+            responseMessage.memory.order.forEach((item: any) => {
+              addToCart(item.item, item.quantity);
+            });
+          }
+        }
+      }
+
     } catch (error) {
       console.error('Error sending message:', error);
       

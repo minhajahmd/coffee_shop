@@ -143,4 +143,3 @@ class OrderTakingAgent():
             }
         }
         return dict_output
-

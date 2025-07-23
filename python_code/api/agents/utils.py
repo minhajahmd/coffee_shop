@@ -51,5 +51,6 @@ def double_check_json_output(client,model_name,json_string):
     messages = [{"role": "user", "content": prompt}]        #That's a clear task, so it fits the "user" role.
 
     response = get_chatbot_response(client,model_name,messages)
+    response = response.replace("\\n", "").replace("\n", "").strip()     # Remove any newlines or extra spaces
 
     return response
