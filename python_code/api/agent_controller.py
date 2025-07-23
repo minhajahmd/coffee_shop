@@ -37,9 +37,5 @@ class AgentController():
         # Get the chosen agent's response
         agent = self.agent_dict[chosen_agent]
         response = agent.get_response(messages)
-        messages.append(response)
 
-        return {
-            "response": response,
-            "messages": messages
-        }
+        return response

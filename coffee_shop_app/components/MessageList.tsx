@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { MessageInterface } from '@/types/types';
 import { ScrollView } from 'react-native-gesture-handler';
 import MessageItem from './MessageItem';
@@ -11,9 +11,18 @@ interface MessageListProps {
 }
 
 const MessageList = ({messages, isTyping}: MessageListProps) => {
-  
+  const ScrollViewRef = useRef<ScrollView | null>(null);
+    ScrollViewRef.current?.scrollToEnd({ animated: true });
+  useEffect(() => {
+
+  }, [messages]);
+
   return (
-    <ScrollView>
+    <ScrollView
+      ref = {ScrollViewRef}
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={{ paddingTop: 10 }}
+    >
       {messages.map((message, index) => (
         <MessageItem key={index} message={message} />
       ))}
