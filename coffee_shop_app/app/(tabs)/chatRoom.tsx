@@ -13,6 +13,8 @@ const ChatRoom = () => {
   const textRef = useRef<string>('')
   const inputRef = useRef<TextInput>(null)
 
+  const [isTyping, setIsTyping] = useState(false);
+
   const handleSendMessage =  async () => {
     let message = textRef.current.trim();
     if (!message) return;
@@ -23,9 +25,10 @@ const ChatRoom = () => {
       if (inputRef) inputRef?.current?.clear();
       
       // Call API to get response
-      
-      setMessages([...inputMessages, { content: 'Thinking...', role: 'assistant' }]);
-
+      setIsTyping(true);
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call delay
+      setMessages([...inputMessages, { content: 'Can I help you?', role: 'assistant' }]);
+      setIsTyping(false);
     } catch (error) {
       console.error('Error sending message:', error);
       
@@ -46,6 +49,7 @@ const ChatRoom = () => {
         <View className='flex-1'>
           <MessageList
             messages={messages}
+            isTyping={isTyping}
           />
         </View>
         <View>
