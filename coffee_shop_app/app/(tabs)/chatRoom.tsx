@@ -26,7 +26,7 @@ const ChatRoom = () => {
       
       // Call API to get response
       setIsTyping(true);
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 5000)); // Simulate API call delay
       setMessages([...inputMessages, { content: 'Can I help you?', role: 'assistant' }]);
       setIsTyping(false);
     } catch (error) {
