@@ -5,16 +5,18 @@ import { API_KEY, API_URL } from '@/config/runpod.config';
 async function callChatBotAPI(messages: MessageInterface[]): Promise<MessageInterface> {
     try {
         const response = await axios.post(API_URL, {
+            // Define the input structure expected by the API
             input: { messages }
         }, {
+            // Set the headers for the request
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${API_KEY}`
+                'Content-Type': 'application/json',         // Specify the content type
+                'Authorization': `Bearer ${API_KEY}`        // Include the API key for authorization
             }
         });
         
-        let output = response.data;
-        let outputMessage: MessageInterface = output['output'];
+        let output = response.data;         // Extract the output from the response
+        let outputMessage: MessageInterface = output['output'];         // Get the output message from the response
 
         return outputMessage;
     } catch (error) {

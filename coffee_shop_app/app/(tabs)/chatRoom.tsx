@@ -39,7 +39,7 @@ const ChatRoom = () => {
           if (responseMessage.memory.order) {
             emptyCart();
             responseMessage.memory.order.forEach((item: any) => {
-              addToCart(item.item, item.quantity);
+              addToCart(item.item, Number(item.quantity));
             });
           }
         }
