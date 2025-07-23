@@ -39,4 +39,7 @@ class AgentController():
         response = agent.get_response(messages)
         messages.append(response)
 
-        return response
+        return {
+            "response": response,
+            "messages": messages
+        }
