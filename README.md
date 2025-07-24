@@ -79,3 +79,7 @@ The mobile app serves as the user-facing interface for customers to interact wit
 - **🛒 Cart Page** – Allows users to review/edit their order (including chatbot-synced updates).
 - **💬 Chatbot Interface** – Embedded chat window for conversational ordering and FAQs.
 
+## 🧪 Getting Started
+
+The project is modular, and each folder includes its own setup steps. This allows the frontend, backend, and data pipelines to be deployed independently.
+
