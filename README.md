@@ -67,7 +67,7 @@ The chatbot is built using a modular, agent-based architecture, where each agent
 
 ## 📱 React Native Coffee Shop App
 
-![App Preview](./mobile_app.png)
+![App Preview](./images/mobile_app.png)
 
 The mobile app serves as the user-facing interface for customers to interact with the AI-powered chatbot and explore the coffee shop menu. Designed with a clean and intuitive user experience, the app integrates the chatbot seamlessly for real-time assistance.
 
