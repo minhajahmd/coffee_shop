@@ -83,3 +83,10 @@ The mobile app serves as the user-facing interface for customers to interact wit
 
 The project is modular, and each folder includes its own setup steps. This allows the frontend, backend, and data pipelines to be deployed independently.
 
+---
+
+### 🧩 References
+
+- UI inspired by this [Coffee Shop Mobile App Design on Figma](https://www.figma.com/design/PKEMJtsntUgQcN5xAIelkx/Coffee-Shop-Mobile-App-Design--Community-?node-id=421-1221&t=pVDlmECRgUOTj7xk-0)
+
+
