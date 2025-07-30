@@ -83,7 +83,6 @@ The mobile app serves as the user-facing interface for customers to interact wit
 
 The project is modular, and each folder includes its own setup steps. This allows the frontend, backend, and data pipelines to be deployed independently.
 
----
 
 ### 🧩 References
 
