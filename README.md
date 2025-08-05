@@ -14,21 +14,39 @@ This project brings together a fully agent-based AI chatbot designed to improve 
 
 ## 🛠️ Tech Stack
 
-### Backend / AI
-- RunPod (LLM hosting)
-- Meta-LLaMA via Hugging Face
-- OpenAI API (LLM interface)
-- Pinecone (RAG vector database)
-- Firebase (real-time data)
-- Scikit-learn (recommendation engine)
-- Pandas (data ops)
-- Docker + DockerHub (agent deployment)
+<table>
+  <tr>
+    <td valign="top" width="60%">
 
-### Mobile App
-- React Native + Expo
-- TypeScript
-- NativeWind (TailwindCSS for React Native)
-- Node.js
+<h3>🔧 Backend / AI</h3>
+
+<ul>
+  <li>RunPod (LLM hosting)</li>
+  <li>Meta-LLaMA via Hugging Face</li>
+  <li>OpenAI API (LLM interface)</li>
+  <li>Pinecone (RAG vector database)</li>
+  <li>Firebase (real-time data)</li>
+  <li>Scikit-learn (recommendation engine)</li>
+  <li>Pandas (data ops)</li>
+  <li>Docker + DockerHub (agent deployment)</li>
+</ul>
+
+</td>
+<td valign="top" width="50%">
+
+<h3>📱 Mobile App</h3>
+
+<ul>
+  <li>React Native + Expo</li>
+  <li>TypeScript</li>
+  <li>NativeWind (TailwindCSS for React Native)</li>
+  <li>Node.js</li>
+</ul>
+
+</td>
+  </tr>
+</table>
+
 
 
 ## 🔧 What I Learned
@@ -67,7 +85,7 @@ The chatbot is built using a modular, agent-based architecture, where each agent
 
 ## 📱 React Native Coffee Shop App
 
-![App Preview](./images/mobile_app.png)
+<img src="./images/mobile_app.png" alt="App Preview" width="90%"/>
 
 The mobile app serves as the user-facing interface for customers to interact with the AI-powered chatbot and explore the coffee shop menu. Designed with a clean and intuitive user experience, the app integrates the chatbot seamlessly for real-time assistance.
 
@@ -78,6 +96,21 @@ The mobile app serves as the user-facing interface for customers to interact wit
 - **📦 Item Details Page** – Shows descriptions, ingredients, allergens, and images.
 - **🛒 Cart Page** – Allows users to review/edit their order (including chatbot-synced updates).
 - **💬 Chatbot Interface** – Embedded chat window for conversational ordering and FAQs.
+
+## 📸 Live Demo Snapshots
+
+A quick look at the app during local testing:
+
+<div align="center">
+
+  <img src="./images/landing_page.png" alt="" width="200" style="margin: 10px"/>
+  <img src="./images/home_page.png" alt="" width="200" style="margin: 10px"/>
+  <img src="./images/chat_test1.png" alt="" width="200" style="margin: 10px"/>
+  <img src="./images/cart_test1.png" alt="" width="200" style="margin: 10px"/>
+  <img src="./images/chat_test1.1.png" alt="" width="200" style="margin: 10px"/>
+  <img src="./images/cart_test1.1.png" alt="" width="200" style="margin: 10px"/>
+  <img src="./images/chat_test1.3.png" alt="" width="200" style="margin: 10px"/>
+</div>
 
 ## 🧪 Getting Started
 
